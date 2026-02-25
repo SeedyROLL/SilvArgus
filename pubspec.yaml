@@ -24,7 +24,7 @@ dependencies:
   image: ^4.1.7
   
   # On-device AI
-  tflite_flutter: ^0.10.4
+  tflite_flutter: ^0.11.0
   
   # Local Storage
   sqflite: ^2.3.2
