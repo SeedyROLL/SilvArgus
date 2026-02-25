@@ -30,7 +30,7 @@ jobs:
         run: flutter pub get
 
       - name: Generate Native Scaffolds (if missing)
-        run: flutter create . --platforms=android
+        run: flutter create . --platforms=android --project-name silvargus
 
       - name: Build APK (Release)
         run: flutter build apk --release
