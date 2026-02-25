@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build APK
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -32,9 +32,22 @@ jobs:
       - name: Generate Native Scaffolds & Update Configs
         run: |
           flutter create . --platforms=android --project-name silvargus
-          sed -i "s/ext.kotlin_version = '<latest-version>'/ext.kotlin_version = '1.9.22'/g" android/build.gradle
-          sed -i "s/ext.kotlin_version = '.*'/ext.kotlin_version = '1.9.22'/g" android/build.gradle
-          sed -i 's/id "org.jetbrains.kotlin.android" version ".*" apply false/id "org.jetbrains.kotlin.android" version "1.9.22" apply false/g' android/settings.gradle
+          python3 -c "
+          import re
+          # Update Kotlin Version in settings.gradle
+          with open('android/settings.gradle', 'r') as f:
+              content = f.read()
+          content = re.sub(r'id\s+\"org\.jetbrains\.kotlin\.android\"\s+version\s+\".*?\"', 'id \"org.jetbrains.kotlin.android\" version \"1.9.24\"', content)
+          with open('android/settings.gradle', 'w') as f:
+              f.write(content)
+          # Update compileSdk inside app/build.gradle for API 35 Support
+          with open('android/app/build.gradle', 'r') as f:
+              content = f.read()
+          content = re.sub(r'compileSdk\s*=\s*flutter\.compileSdkVersion', 'compileSdk = 35', content)
+          content = re.sub(r'compileSdkVersion\s+flutter\.compileSdkVersion', 'compileSdkVersion 35', content)
+          with open('android/app/build.gradle', 'w') as f:
+              f.write(content)
+          "
 
       - name: Build APK (Release)
         run: flutter build apk --release
