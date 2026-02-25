@@ -50,7 +50,7 @@ jobs:
               content = re.sub(r'id\s+\"org\.jetbrains\.kotlin\.android\"\s+version\s+\".*?\"', 'id \"org.jetbrains.kotlin.android\" version \"1.9.24\"', content)
               with open(sg_path, 'w') as f: f.write(content)
                   
-          # 3. Update build.gradle (SDKs and namespace)
+          # 3. Update build.gradle (SDKs, NDK, Namespace, Desugaring)
           bg_path = 'android/app/build.gradle'
           if os.path.exists(bg_path):
               with open(bg_path, 'r') as f: content = f.read()
@@ -60,6 +60,19 @@ jobs:
               content = re.sub(r'targetSdkVersion\s+flutter\.targetSdkVersion', 'targetSdkVersion 35', content)
               if 'namespace ' not in content:
                   content = re.sub(r'(android\s*\{)', r'\1\n    namespace \"com.example.silvargus\"', content)
+              
+              # NDK Version
+              if 'ndkVersion' not in content:
+                  content = re.sub(r'(android\s*\{)', r'\1\n    ndkVersion = \"27.0.12077973\"', content)
+              
+              # Core Library Desugaring Options
+              if 'coreLibraryDesugaringEnabled' not in content:
+                  content = re.sub(r'(compileOptions\s*\{)', r'\1\n        coreLibraryDesugaringEnabled true', content)
+              
+              # Desugaring Dependency
+              if 'coreLibraryDesugaring ' not in content:
+                  content = re.sub(r'(dependencies\s*\{)', r'\1\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"', content)
+                  
               with open(bg_path, 'w') as f: f.write(content)
                   
           # 4. Suppress Warnings in gradle.properties
