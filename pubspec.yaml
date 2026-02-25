@@ -50,8 +50,6 @@ flutter:
   assets:
     - assets/model.tflite
     - assets/labels.txt
-    - assets/models/
-    - assets/images/
 
 flutter_native_splash:
   color: "#2E7D32"
