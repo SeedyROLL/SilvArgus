@@ -1,0 +1,60 @@
+name: silvargus
+description: "A high-performance mobile application named SilvArgus for real-time plant disease diagnosis using on-device AI."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  
+  # State management
+  provider: ^6.1.2
+  
+  # UI and Fonts
+  google_fonts: ^6.2.1
+  
+  # Camera and Image processing
+  camera: ^0.10.5+9
+  image_picker: ^1.0.8
+  image: ^4.1.7
+  
+  # On-device AI
+  tflite_flutter: ^0.10.4
+  
+  # Local Storage
+  sqflite: ^2.3.2
+  path_provider: ^2.1.2
+  
+  # UX & Settings
+  shared_preferences: ^2.2.2
+  flutter_local_notifications: ^17.1.2
+  
+  # Formatting dates
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_native_splash: ^2.3.13
+
+flutter:
+  uses-material-design: true
+  
+  # We will define assets like models, labels, and icons here
+  assets:
+    - assets/model.tflite
+    - assets/labels.txt
+    - assets/models/
+    - assets/images/
+
+flutter_native_splash:
+  color: "#2E7D32"
+  # image: assets/images/splash.png # Optional: Add an image later
+  android_12:
+    color: "#2E7D32"
