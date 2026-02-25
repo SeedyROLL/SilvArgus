@@ -29,8 +29,12 @@ jobs:
       - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Generate Native Scaffolds (if missing)
-        run: flutter create . --platforms=android --project-name silvargus
+      - name: Generate Native Scaffolds & Update Kotlin
+        run: |
+          flutter create . --platforms=android --project-name silvargus
+          sed -i "s/ext.kotlin_version = '<latest-version>'/ext.kotlin_version = '1.9.22'/g" android/build.gradle
+          sed -i "s/ext.kotlin_version = '.*'/ext.kotlin_version = '1.9.22'/g" android/build.gradle
+          sed -i 's/id "org.jetbrains.kotlin.android" version ".*" apply false/id "org.jetbrains.kotlin.android" version "1.9.22" apply false/g' android/settings.gradle
 
       - name: Build APK (Release)
         run: flutter build apk --release
