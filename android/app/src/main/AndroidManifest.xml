@@ -2,11 +2,17 @@
     <!-- Permissions for Gallery Upload Integration in SilvArgus -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:label="silvargus"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
+        <!-- FLUTTER V2 EMBEDDING (Crucial for modern builds) -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

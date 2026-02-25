@@ -29,6 +29,9 @@ jobs:
       - name: Get Flutter dependencies
         run: flutter pub get
 
+      - name: Generate Native Scaffolds (if missing)
+        run: flutter create . --platforms=android
+
       - name: Build APK (Release)
         run: flutter build apk --release
 
