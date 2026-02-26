@@ -67,6 +67,14 @@ jobs:
               if 'ndkVersion' not in content:
                   content = re.sub(r'(android\s*\{)', r'\1\n    ndkVersion = \"27.0.12077973\"', content)
               
+              # MultiDex Enabled
+              if 'multiDexEnabled' not in content:
+                  content = re.sub(r'(defaultConfig\s*\{)', r'\1\n        multiDexEnabled true', content)
+
+              # Lint Options
+              if 'lintOptions' not in content:
+                  content = re.sub(r'(android\s*\{)', r'\1\n    lintOptions {\n        checkReleaseBuilds false\n        abortOnError false\n    }', content)
+
               # Core Library Desugaring Options
               if 'coreLibraryDesugaringEnabled' not in content:
                   content = re.sub(r'(compileOptions\s*\{)', r'\1\n        coreLibraryDesugaringEnabled true', content)
